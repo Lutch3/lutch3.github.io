@@ -31,7 +31,7 @@ const Login: React.FC = memo(() => {
 
   return (
     <>
-      <div style={{ width:'750px',display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', alignItems: 'center' }}>
+      <div style={{ width:'auto',display: 'flex', flexDirection: 'column', flexWrap: 'wrap', alignContent: 'center', alignItems: 'center' }}>
         <span style={{ paddingRight: '5px' }} className="">
           UserName
         </span>

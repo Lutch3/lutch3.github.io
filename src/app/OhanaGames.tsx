@@ -23,7 +23,7 @@ export const OhanaGames: React.FC = () => {
   };
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems:'center' }}>
         <h1>Ohana Games</h1>
         {isAuthentified && (
           <span style={{ width: '25px' }} className="logout" onClick={doLogout}>
@@ -36,6 +36,13 @@ export const OhanaGames: React.FC = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>
+          <div style={{ margin: '5px' }} className="card">
+            <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+              <h2>Ranking</h2>
+              <Icon.Award size={40} style={{ paddingLeft: '5px' }} />
+            </div>
+            <Ranking />
+          </div>
           <div style={{ margin: '5px', height: '525px' }} className="card">
             <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
               <h2>Players</h2>
@@ -55,13 +62,6 @@ export const OhanaGames: React.FC = () => {
             <div style={{ paddingTop: '5px', height: 'auto', overflowY: 'scroll' }}>
               <GamesList />
             </div>
-          </div>
-          <div style={{ margin: '5px' }} className="card">
-            <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
-              <h2>Ranking</h2>
-              <Icon.Award size={40} style={{ paddingLeft: '5px' }} />
-            </div>
-            <Ranking />
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>

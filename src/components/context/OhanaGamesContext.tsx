@@ -78,7 +78,7 @@ const eventPlayersBaseValue: EventPlayer[] = [];
 
 const initialState: State = {
   isLoading: true,
-  isAuthentified: false,
+  isAuthentified: true,
   players: playersBaseValue,
   games: gamesBaseValue,
   events: eventsBaseValue,
