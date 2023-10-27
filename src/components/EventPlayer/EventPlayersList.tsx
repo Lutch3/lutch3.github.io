@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 
 import './EventPlayersList.css';
 import { ListGroup } from 'react-bootstrap';
-import { useApiContext, useEventPlayersContext, usePlayersContext } from '../context/OhanaGamesContext';
+import { useApiContext, useAuthentifiedContext, useEventPlayersContext, usePlayersContext } from '../context/OhanaGamesContext';
 import { removeEventPlayer, updateEventPlayer } from '../../service/OhanaGamesService';
 import * as Icon from 'react-bootstrap-icons';
 
@@ -13,6 +13,7 @@ interface AddEventPlayerProps {
 const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEventPlayerProps) => {
   const eventPlayers = useEventPlayersContext();
   const players = usePlayersContext();
+  const isAuthentified = useAuthentifiedContext();
   const { setEventPlayers } = useApiContext();
 
   const eventPlayersListGroups = eventPlayers?.filter((ep) => ep.eventId === eventId).map((eventPlayer: any) => {
@@ -22,13 +23,14 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
           <ListGroup.Item style={{ width: '50%' }} key={eventPlayer.id}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <span style={{width:'125px'}}> {player?.name} </span>
-              <div  style={{display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
+              {isAuthentified && <div  style={{display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
                 <Icon.Trophy style={{marginRight:'5px'}}/>
                 <input type="checkbox" checked={eventPlayer.isWinner} onChange={(event) => updateEventPlayerWinner(eventPlayer, event.target.checked)}></input>
-              </div>
+              </div>}
+              {!isAuthentified && eventPlayer.isWinner && <Icon.Trophy style={{marginRight:'5px'}}/>}
             </div>
           </ListGroup.Item>
-          <button onClick={() => deleteEventPlayer(eventPlayer)}><Icon.Trash/></button>
+          {isAuthentified && <button onClick={() => deleteEventPlayer(eventPlayer)}><Icon.Trash/></button>}
         </div>
       );
     });

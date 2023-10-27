@@ -18,6 +18,8 @@ import {
   OrderByDirection
 } from 'firebase/firestore';
 
+import { signInWithEmailAndPassword, getAuth, signOut} from 'firebase/auth';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyDT0HOrVe9bRmAt8AhFP1-GBxoROoUD31s',
@@ -31,6 +33,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const fireStore = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+
+export const login = async (username:string, password:string) => {
+  await signInWithEmailAndPassword(auth,username,password);
+}
+
+export const logout = async () => {
+    await signOut(auth);
+}
 
 export const findAll = async (collectionName: string, orderByProperty:string, orderByDirection?:OrderByDirection) => {
   const collectionRef = collection(fireStore, collectionName);

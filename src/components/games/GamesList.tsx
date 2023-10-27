@@ -3,17 +3,18 @@ import { memo, useEffect } from 'react';
 import './GamesList.css';
 import { Game } from '../../model/models';
 import { ListGroup } from 'react-bootstrap';
-import { useApiContext, useGamesContext } from '../context/OhanaGamesContext';
+import { useApiContext, useAuthentifiedContext, useGamesContext } from '../context/OhanaGamesContext';
 import { removeGame } from '../../service/OhanaGamesService';
 import * as Icon from 'react-bootstrap-icons';
 
 const GamesList: React.FC = memo(() => {
     const games = useGamesContext();
     const { setGames } = useApiContext();
+    const isAuthentified = useAuthentifiedContext();
     const gamesListGroups = games?.map((game:Game) => 
         <div style={{display:'flex', flexDirection:'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center'}}>
             <ListGroup.Item style={{width:'100%'}} key={game.id}>{game.name}</ListGroup.Item>
-            <button onClick={() => deleteGame(game)}><Icon.Trash/></button>
+            {isAuthentified && <button onClick={() => deleteGame(game)}><Icon.Trash/></button>}
         </div>
     );
     useEffect(() => {

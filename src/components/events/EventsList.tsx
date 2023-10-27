@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 
 import './EventsList.css';
 import { ListGroup } from 'react-bootstrap';
-import { useApiContext, useEventsContext, useGamesContext } from '../context/OhanaGamesContext';
+import { useApiContext, useAuthentifiedContext, useEventsContext, useGamesContext } from '../context/OhanaGamesContext';
 import { removeEvent } from '../../service/OhanaGamesService';
 import { AddEventPlayer } from '../EventPlayer/AddEventPlayer';
 import { EventPlayersList } from '../EventPlayer/EventPlayersList';
@@ -11,6 +11,7 @@ import * as Icon from 'react-bootstrap-icons';
 const EventsList: React.FC = memo(() => {
   const events = useEventsContext();
   const games = useGamesContext();
+  const isAuthentified = useAuthentifiedContext();
   const { setEvents } = useApiContext();
 
   const eventsListGroups = events?.map((event: any) => {
@@ -24,9 +25,9 @@ const EventsList: React.FC = memo(() => {
           <ListGroup.Item style={{ width: '100%' }} key={event.id}>
             {dateString} - {eventGame?.name}
           </ListGroup.Item>
-          <button onClick={() => deleteEvent(event)}><Icon.Trash/></button>
+          {isAuthentified && <button onClick={() => deleteEvent(event)}><Icon.Trash/></button>}
         </div>
-        <AddEventPlayer eventId={event.id} />
+        {isAuthentified && <AddEventPlayer eventId={event.id} />}
         <div style={{ paddingTop: '5px', display: 'flex',flexDirection: 'column', flexWrap: 'wrap', alignItems: 'center' }}>
           <EventPlayersList eventId={event.id} />
         </div>
