@@ -19,9 +19,6 @@ export const OhanaGames: React.FC = () => {
       .then(() => {
         console.log('Signed out successfully');
         setIsAuthentified(false);
-      })
-      .catch((error) => {
-        // An error happened.
       });
   };
   return (
