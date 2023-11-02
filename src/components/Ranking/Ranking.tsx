@@ -7,7 +7,7 @@ const Ranking: React.FC = memo(() => {
   const players = usePlayersContext();
 
   useEffect(() => {
-    console.log('Rendering Ranking', eventPlayers);
+    console.log('Rendering Ranking');
   }, [eventPlayers]);
 
   const calculateRankingRows = () => {

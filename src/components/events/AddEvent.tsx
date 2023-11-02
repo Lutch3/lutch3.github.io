@@ -42,7 +42,7 @@ const AddEvent: React.FC = memo(() => {
       addEvent(eventToAdd).then((addedEvent: any) => {
         //refresh the collection
         let eventsArray: any[] = JSON.parse(JSON.stringify(events));
-        eventsArray.push(addedEvent);
+        eventsArray.unshift(addedEvent);
         setEvents(eventsArray);
       });
     }

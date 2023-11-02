@@ -19,7 +19,6 @@ const AddPlayer: React.FC = memo(() => {
       let playerToAdd: Player = { name: name };
       //write the player to the DB
       addPlayer(playerToAdd).then((addedPlayer) => {
-        console.log(addedPlayer);
         //refresh the collection
         let playersArray: any[] = JSON.parse(JSON.stringify(players));
         playersArray.push(addedPlayer);

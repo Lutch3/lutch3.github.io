@@ -42,10 +42,7 @@ const AddEventPlayer: React.FC<AddEventPlayerProps> = memo( ( {eventId}: AddEven
 
   const addEventPlayerClickHandler = () => {
     if (selectedPlayerId) {
-      console.log('eventId',eventId);
-      console.log('selectedPlayerId',selectedPlayerId);
       let eventPlayerToAdd: EventPlayer = { eventId: eventId, playerId: selectedPlayerId, isWinner:false };
-      console.log('eventPlayerToAdd',eventPlayerToAdd);
       addEventPlayer(eventPlayerToAdd).then((addedEventPlayer: any) => {
         //refresh the collection
         let eventPlayersArray: any[] = JSON.parse(JSON.stringify(eventPlayers));

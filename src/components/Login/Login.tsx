@@ -7,7 +7,7 @@ const Login: React.FC = memo(() => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
-  const { setIsAuthentified } = useApiContext();
+  const { setIsAuthentified, setHasContinuedAsGuest } = useApiContext();
 
   useEffect(() => {
     console.log('Rendering Login');
@@ -17,7 +17,6 @@ const Login: React.FC = memo(() => {
     if (userName && password) {
         login(userName,password).then((userCredential:any) => {
             // Signed in
-            console.log(userCredential);
             setIsAuthentified(true);
         })
         .catch((error) => {
@@ -27,6 +26,9 @@ const Login: React.FC = memo(() => {
             setIsAuthentified(false);
           });
     }
+  };
+  const doContinueAsGuest = () => {
+    setHasContinuedAsGuest(true);
   };
 
   return (
@@ -41,6 +43,7 @@ const Login: React.FC = memo(() => {
         </span>
         <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
         <button style={{ marginLeft: '5px' }} onClick={doLogin}>Login</button>
+        <button style={{ marginLeft: '5px' }} onClick={doContinueAsGuest}>Continue As Guest</button>
       </div>
     </>
   );

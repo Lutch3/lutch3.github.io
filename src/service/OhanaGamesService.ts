@@ -57,7 +57,6 @@ export const findAll = async (collectionName: string, orderByProperty:string, or
       ...r.data(),
     });
   });
-  console.log(collectionName,result)
   return result;
 };
 
@@ -104,7 +103,6 @@ export const removeGame = async (game: Game) => {
 //EVENTS
 export const addEvent = async (event: Event) => {
   try {
-    console.log('adding Event', event);
     const docRef: any = await addDoc(collection(fireStore, 'events'), event);
     const obj = { id: docRef.id, date: event.date, gameId:event.gameId };
     return obj;
@@ -126,7 +124,6 @@ export const removeEvent = async (event: Event) => {
 //EVENT PLAYERS
 export const addEventPlayer = async (eventPlayer: EventPlayer) => {
   try {
-    console.log('adding Event Player', eventPlayer);
     const docRef: any = await addDoc(collection(fireStore, 'eventPlayers'), eventPlayer);
     const obj = { id: docRef.id, eventId: eventPlayer.eventId, playerId: eventPlayer.playerId };
     return obj;
@@ -137,7 +134,6 @@ export const addEventPlayer = async (eventPlayer: EventPlayer) => {
 
 export const updateEventPlayer = async (eventPlayer: EventPlayer) => {
   try {
-    console.log('updating Event Player', eventPlayer);
     const colletionRef = collection(fireStore, 'eventPlayers');
     const eventPlayerRef = doc(colletionRef, eventPlayer.id);
     await updateDoc(eventPlayerRef, {id:eventPlayer.id, eventId:eventPlayer.eventId, playerId:eventPlayer.playerId, isWinner: eventPlayer.isWinner})

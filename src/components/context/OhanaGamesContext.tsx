@@ -32,6 +32,11 @@ export const useAuthentifiedContext = () => {
   return useContext(authentifiedContext);
 };
 
+const continuedAsGuestContext = createContext<State['hasContinuedAsGuest']>(false);
+export const useContinuedAsGuestContext = () => {
+  return useContext(continuedAsGuestContext);
+};
+
 const apiContext = createContext<{ [key: string]: (...args: any[]) => unknown }>({});
 export const useApiContext = () => {
   return useContext(apiContext);
@@ -43,11 +48,13 @@ type Actions =
   | { type: 'updateEvents'; events: any }
   | { type: 'updateEventPlayers'; eventPlayers: any }
   | { type: 'updateIsLoading'; isLoading: boolean }
-  | { type: 'updateIsAuthentified'; isAuthentified: boolean };
+  | { type: 'updateIsAuthentified'; isAuthentified: boolean }
+  | { type: 'updateHasContinuedAsGuest'; hasContinuedAsGuest: boolean };
 
 type State = {
   isLoading: boolean;
   isAuthentified: boolean;
+  hasContinuedAsGuest: boolean;
   players: Player[];
   games: Game[];
   events: Event[];
@@ -60,6 +67,8 @@ const reducer = (state: State, action: Actions): State => {
       return { ...state, isLoading: action.isLoading };
     case 'updateIsAuthentified':
       return { ...state, isAuthentified: action.isAuthentified };
+    case 'updateHasContinuedAsGuest':
+      return { ...state, hasContinuedAsGuest: action.hasContinuedAsGuest };
     case 'updatePlayers':
       return { ...state, players: action.players };
     case 'updateGames':
@@ -79,6 +88,7 @@ const eventPlayersBaseValue: EventPlayer[] = [];
 const initialState: State = {
   isLoading: true,
   isAuthentified: false,
+  hasContinuedAsGuest: false,
   players: playersBaseValue,
   games: gamesBaseValue,
   events: eventsBaseValue,
@@ -149,20 +159,26 @@ export const OhanaGamesProvider = ({ children }: { children: React.ReactNode }) 
       dispatch({ type: 'updateIsAuthentified', isAuthentified: isAuthentified });
     };
 
-    return { setPlayers, setGames, setEvents, setEventPlayers, setIsAuthentified };
+    const setHasContinuedAsGuest = (hasContinuedAsGuest: boolean) => {
+      dispatch({ type: 'updateHasContinuedAsGuest', hasContinuedAsGuest: hasContinuedAsGuest });
+    };
+
+    return { setPlayers, setGames, setEvents, setEventPlayers, setIsAuthentified, setHasContinuedAsGuest };
   }, []);
 
   return (
     <apiContext.Provider value={api}>
       <loadingContext.Provider value={state.isLoading}>
         <authentifiedContext.Provider value={state.isAuthentified}>
-          <playersContext.Provider value={state.players}>
-            <gamesContext.Provider value={state.games}>
-              <eventsContext.Provider value={state.events}>
-                <eventPlayersContext.Provider value={state.eventPlayers}>{children}</eventPlayersContext.Provider>
-              </eventsContext.Provider>
-            </gamesContext.Provider>
-          </playersContext.Provider>
+          <continuedAsGuestContext.Provider value={state.hasContinuedAsGuest}>
+            <playersContext.Provider value={state.players}>
+              <gamesContext.Provider value={state.games}>
+                <eventsContext.Provider value={state.events}>
+                  <eventPlayersContext.Provider value={state.eventPlayers}>{children}</eventPlayersContext.Provider>
+                </eventsContext.Provider>
+              </gamesContext.Provider>
+            </playersContext.Provider>
+          </continuedAsGuestContext.Provider>
         </authentifiedContext.Provider>
       </loadingContext.Provider>
     </apiContext.Provider>
