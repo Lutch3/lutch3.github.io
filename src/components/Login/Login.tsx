@@ -17,6 +17,7 @@ const Login: React.FC = memo(() => {
     if (userName && password) {
         login(userName,password).then((userCredential:any) => {
             // Signed in
+            console.log(userCredential);
             setIsAuthentified(true);
         })
         .catch((error) => {

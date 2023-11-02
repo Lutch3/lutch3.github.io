@@ -60,7 +60,7 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
 
 
   const constructPlayerDivs = (players:any) => {
-    return players.sort((a,b)=> (a.name).localeCompare(b.name) ).map( (p:any) => 
+    return players.sort((a:any,b:any)=> (a.name).localeCompare(b.name) ).map( (p:any) => 
       <div>
         <span style={{width:'125px', paddingRight:'5px'}}> {p?.name} </span>
       </div>
@@ -95,12 +95,12 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
           <td>{event.game}</td>
           <td>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'baseline' }}>
-                { constructPlayerDivs(event.players.sort((a,b) => a.name.localeCompare(b.name)).filter((p:any) => p.isWinner)) }
+                { constructPlayerDivs(event.players.filter((p:any) => p.isWinner)) }
               </div>
           </td>
           <td>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'baseline' }}>
-                { constructPlayerDivs(event.players.sort((a,b) => a.name.localeCompare(b.name)).filter((p:any) => !p.isWinner)) }
+                { constructPlayerDivs(event.players.filter((p:any) => !p.isWinner)) }
               </div>
           </td>
         </tr>
