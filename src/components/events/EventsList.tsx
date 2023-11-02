@@ -7,7 +7,6 @@ import { removeEvent } from '../../service/OhanaGamesService';
 import { AddEventPlayer } from '../EventPlayer/AddEventPlayer';
 import { EventPlayersList } from '../EventPlayer/EventPlayersList';
 import * as Icon from 'react-bootstrap-icons';
-import { Event } from '../../model/models';
 
 interface EventsListProps {
   readOnly: boolean;
