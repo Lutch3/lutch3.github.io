@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import './PlayersList.css';
 import { Player } from '../../model/models';
@@ -6,8 +6,15 @@ import { ListGroup } from 'react-bootstrap';
 import { useApiContext, useAuthentifiedContext, usePlayersContext } from '../context/OhanaGamesContext';
 import { removePlayer } from '../../service/OhanaGamesService';
 import * as Icon from 'react-bootstrap-icons';
+import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
 
 const PlayersList: React.FC = memo(() => {
+
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+
     const players = usePlayersContext();
     const isAuthentified = useAuthentifiedContext();
     const { setPlayers } = useApiContext();
@@ -22,11 +29,18 @@ const PlayersList: React.FC = memo(() => {
     }, [players]);
 
     const deletePlayer = (player:any) => {
-        removePlayer(player).then( () => {
-            let playersArray: any[] = JSON.parse(JSON.stringify(players));
-            playersArray = playersArray.filter( (item) => item.id !== player.id );
-            setPlayers(playersArray);
-        });
+        console.log(player);
+        handleShow();
+    }
+
+    const handleButtonClicked = (answer: 'Yes'|'No') => {
+      handleClose();
+      console.log(answer);
+    //   removePlayer(player).then( () => {
+    //     let playersArray: any[] = JSON.parse(JSON.stringify(players));
+    //     playersArray = playersArray.filter( (item) => item.id !== player.id );
+    //     setPlayers(playersArray);
+    //     });
     }
 
     return (
@@ -35,10 +49,10 @@ const PlayersList: React.FC = memo(() => {
             }
 
             {(!players || players.length === 0) && <span>Please add players</span>}
+
+            <ModalDeleteDialog showModal={showModal} buttonClickedHandler={handleButtonClicked} />
         </>
     );
-
-    
 });
 
 

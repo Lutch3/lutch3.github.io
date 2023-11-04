@@ -9,6 +9,7 @@ import { PlayersList } from '../components/players/PlayersList';
 import { Login } from '../components/Login/Login';
 import * as Icon from 'react-bootstrap-icons';
 import { logout } from '../service/OhanaGamesService';
+import { Button } from 'react-bootstrap';
 
 export const OhanaGames: React.FC = () => {
   const isAuthentified = useAuthentifiedContext();
@@ -22,6 +23,7 @@ export const OhanaGames: React.FC = () => {
       setHasContinuedAsGuest(false);
     });
   };
+
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -80,7 +82,13 @@ export const OhanaGames: React.FC = () => {
           </div>
         </div>
       }
+      <Button variant="primary" onClick={() => handleShow()}>
+        Try Modal
+      </Button>
+
       <p style={{marginTop:'25px'}}className="read-the-docs">Created by Lutch ^^</p>
+
+
     </>
   );
 };
